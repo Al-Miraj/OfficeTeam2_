@@ -26,3 +26,11 @@ GET https://localhost:5000/api/EventAttendance/DeleteEventAttendance/ac1c489d-c0
 // user id   , ad80f0e9-47c1-49c2-a883-2674117e81bc
 // event id 1, ac1c489d-c090-49dc-b850-b827f1d1b049
 // event id 2, dc20869e-0e40-4ba0-a4d5-ca68aa6e4578
+
+/*
+- ####attend an event you already attended
+- list attendees only to event you planned/or are attending???
+- ####only be able to delete attendance if it hasnt passed yet (change OnTime function to IsBeforeEvent)
+- merge login so that only a logged in can view list of attendees
+- only delete if logged in is the same as the user attendance being deleted
+*/

@@ -45,7 +45,7 @@ public class EventAttendanceControllers: Controller {
             return Ok($"Deletion of event attendance to event with ID {event_id} and user ID {user_id} succesfull");
         }
         else{
-            return NotFound($"Event attendance with event ID {event_id} and user ID {user_id} not found.");
+            return BadRequest($"Deletion of event attendance with event ID {event_id} and user ID {user_id} failed.");
         }
 
     }

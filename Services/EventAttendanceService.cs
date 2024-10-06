@@ -11,20 +11,41 @@ public class EventAttendanceService : IEventAttendanceService{
         return event_ is not null; // true if event exists, false if not
     }
 
-    private bool _checkAttendanceOnTime(Guid event_Id){ // Q null check or not???
+    private bool _checkItsBeforeEventStart(Guid event_Id){ // Q null check or not???
         Event? event_ = _getEvent(event_Id);
         if(event_ == null) return false; // If the event doesn't exist, attendance is invalid.
 
-        TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
-        return event_.Start_Time > now && event_.Date >= DateTime.Now; // true if its before the starttime, false if not
+        DateOnly eventDate = DateOnly.FromDateTime(event_.Date);
+        TimeOnly eventStartTime = event_.Start_Time;
+        DateTime eventDT = eventDate.ToDateTime(eventStartTime);
+        DateTime now = DateTime.Now;
+        return now < eventDT; // true if its before the starttime, false if not
+    }
+
+/*
+date must be before or on the day
+time must be before if on the day
+*/
+
+    private bool _hasUserAttendedEvent(Guid event_Id, Guid user_Id){
+        List<EventAttendance> eventAttendances = JsonFileHandler.ReadJsonFile<EventAttendance>("Data/EventAttendance.json");
+        foreach (EventAttendance ea in eventAttendances){
+            if (ea.Event_Id == event_Id && ea.User_Id == user_Id){
+                return true;
+            }
+        }
+        return false;
     }
 
     public async Task<bool> AttendEventAsync(EventAttendance eventAttendance){
-        if (CheckEventExistance(eventAttendance.Event_Id) && _checkAttendanceOnTime(eventAttendance.Event_Id)){
-            List<EventAttendance> attendances = JsonFileHandler.ReadJsonFile<EventAttendance>("Data/EventAttendance.json");
-            attendances.Add(eventAttendance);
-            JsonFileHandler.WriteToJsonFile("Data/EventAttendance.json", attendances);
-            return true;
+        bool eventExists = CheckEventExistance(eventAttendance.Event_Id);
+        bool userHasntAttended = _hasUserAttendedEvent(eventAttendance.Event_Id, eventAttendance.User_Id) == false;
+        bool eventHasntStarted = _checkItsBeforeEventStart(eventAttendance.Event_Id);
+        if (eventExists && userHasntAttended && eventHasntStarted){
+                List<EventAttendance> attendances = JsonFileHandler.ReadJsonFile<EventAttendance>("Data/EventAttendance.json");
+                attendances.Add(eventAttendance);
+                JsonFileHandler.WriteToJsonFile("Data/EventAttendance.json", attendances);
+                return true;
         }
         return false;
     }
@@ -55,9 +76,11 @@ public class EventAttendanceService : IEventAttendanceService{
         List<EventAttendance> eventAttendances = JsonFileHandler.ReadJsonFile<EventAttendance>("Data/EventAttendance.json");
         foreach (EventAttendance ea in eventAttendances){
             if (ea.Event_Id == event_Id && ea.User_Id == user_id){
-                eventAttendances.Remove(ea);
-                JsonFileHandler.WriteToJsonFile("Data/EventAttendance.json", eventAttendances);
-                return true;
+                if (_checkItsBeforeEventStart(ea.Event_Id)){
+                    eventAttendances.Remove(ea);
+                    JsonFileHandler.WriteToJsonFile("Data/EventAttendance.json", eventAttendances);
+                    return true;
+                }
             }
         }
         return false;
