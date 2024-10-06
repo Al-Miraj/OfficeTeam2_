@@ -1,128 +1,45 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using EventManagementAPI.Data;
-using EventManagementAPI.Models;
-using Microsoft.AspNetCore.Authorization;
+using OfficeTeam2_.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace EventManagementAPI.Controllers
+namespace OfficeTeam2_.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class EventsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
-        public EventsController(ApplicationDbContext context)
+        private static List<Event> events = new List<Event>
         {
-            _context = context;
-        }
+            new Event 
+            { 
+                Id = 1, 
+                Title = "Event 1", 
+                Description = "Description of Event 1", 
+                Date = DateTime.Now, 
+                StartTime = new TimeSpan(14, 0, 0), // 2 PM
+                EndTime = new TimeSpan(16, 0, 0), // 4 PM
+                Location = "Location 1",
+                Reviews = new List<string> { "Great event!" },
+                Attendees = new List<string> { "Attendee 1", "Attendee 2" }
+            },
+            new Event 
+            { 
+                Id = 2, 
+                Title = "Event 2", 
+                Description = "Description of Event 2", 
+                Date = DateTime.Now.AddDays(1), // Tomorrow
+                StartTime = new TimeSpan(10, 0, 0), // 10 AM
+                EndTime = new TimeSpan(12, 0, 0), // 12 PM
+                Location = "Location 2",
+                Reviews = new List<string> { "Had a great time!" },
+                Attendees = new List<string> { "Attendee 3", "Attendee 4" }
+            }
+        };
 
-        // GET: api events
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
+        public ActionResult<List<Event>> GetEvents()
         {
-            var events = await _context.Events
-                .Include(e => e.Reviews)
-                .Include(e => e.Attendees)
-                .ToListAsync();
-
             return Ok(events);
-        }
-
-        // GET: events id
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Event>> GetEvent(int id)
-        {
-            var eventItem = await _context.Events
-                .Include(e => e.Reviews)
-                .Include(e => e.Attendees)
-                .FirstOrDefaultAsync(e => e.Id == id);
-
-            if (eventItem == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(eventItem);
-        }
-
-        // POST: CreateEvent
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<Event>> CreateEvent([FromBody] Event eventItem)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Events.Add(eventItem);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetEvent), new { id = eventItem.Id }, eventItem);
-        }
-
-        // PUT: UpdateEvent
-        [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateEvent(int id, [FromBody] Event eventItem)
-        {
-            if (id != eventItem.Id)
-            {
-                return BadRequest("Event ID mismatch.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Entry(eventItem).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
-        }
-
-        // DELETE: events met id
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteEvent(int id)
-        {
-            var eventItem = await _context.Events.FindAsync(id);
-            if (eventItem == null)
-            {
-                return NotFound();
-            }
-
-            _context.Events.Remove(eventItem);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        // Helper method to check if an event exists
-        private bool EventExists(int id)
-        {
-            return _context.Events.Any(e => e.Id == id);
         }
     }
 }
-
-

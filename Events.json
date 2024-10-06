@@ -1,0 +1,17 @@
+[
+    {
+      "id": 1,
+      "name": "Company Annual Meeting",
+      "date": "2024-10-10",
+      "location": "Main Hall",
+      "attendees": ["John Doe", "Jane Smith"]
+    },
+    {
+      "id": 2,
+      "name": "Product Launch",
+      "date": "2024-10-15",
+      "location": "Conference Room",
+      "attendees": ["Alice Johnson", "Bob White"]
+    }
+  ]
+  
