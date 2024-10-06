@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 // EventControllers.cs
 ////////////////////////////////////////////////
 [Route("api/EventAttendance")]
-public class EventControllers: Controller {
+public class EventAttendanceControllers: Controller {
     public IEventAttendanceService EventService;
-    public EventControllers(IEventAttendanceService eventService){
+    public EventAttendanceControllers(IEventAttendanceService eventService){
         EventService = eventService;
     }
 
