@@ -6,46 +6,46 @@ using Microsoft.AspNetCore.Mvc;
 ////////////////////////////////////////////////
 [Route("api/EventAttendance")]
 public class EventControllers: Controller {
-    public EventServices EventService;
-    public EventControllers(EventServices eventService){
+    public IEventAttendanceService EventService;
+    public EventControllers(IEventAttendanceService eventService){
         EventService = eventService;
     }
 
     [HttpGet("h")]
-    public async Task<IActionResult> Testt(){
+    public IActionResult Testt(){
         return Ok("worked.");
     }
 
     [HttpPost("Attend")]
     public async Task<IActionResult> AttendEvent([FromBody] EventAttendance eventAttendance) {
-        if (EventService.CheckAttendanceOnTime(eventAttendance.Event_Id)){ // Q is this considered business logic? or is it fine here?
-            JsonFileHandler.WriteToJsonFile("Data/EventAttendance.json", new List<EventAttendance>() {eventAttendance}); // Q should be awaitable?
-            return Ok(eventAttendance.Event_Id);
-        }
-        else {
-            return NotFound(eventAttendance.Event_Id); // Q good feedback response?
+        bool result = await EventService.AttendEventAsync(eventAttendance);
+        
+        if (result) {
+            return Ok($"Attendance to event with ID {eventAttendance.Event_Id} succeeded.");
+        } else {
+            return BadRequest($"Attendance to event with ID{eventAttendance.Event_Id} failed."); // Q good feedback response?
         } 
     }
 
     // basic authentication
     [HttpGet("FindEventAttendees/{event_id}")]
     public async Task<IActionResult> FindEventAttendees(Guid event_id){
-        if (EventService.CheckEventExistance(event_id)){
-            return Ok(EventService.ListEventAttendees(event_id));
-        }
-        else{
-            return NotFound(event_id);
+        if (EventService.CheckEventExistance(event_id) == false){
+            return NotFound($"Event with ID {event_id} not found.");
         }
 
+        List<Guid> result = await EventService.ListEventAttendeesAsync(event_id);
+        return Ok(result);
     }
 
     [HttpGet("DeleteEventAttendance/{event_id}/{user_id}")]
     public async Task<IActionResult> DeleteEventAttendance(Guid event_id, Guid user_id){
-        if (EventService.CheckEventExistance(event_id) && EventService.DeleteEventAttendance(event_id, user_id)){
-            return Ok("deletion succesfull");
+        bool result = await EventService.DeleteEventAttendanceAsync(event_id, user_id);
+        if (result){
+            return Ok($"Deletion of event attendance to event with ID {event_id} and user ID {user_id} succesfull");
         }
         else{
-            return Conflict();
+            return NotFound($"Event attendance with event ID {event_id} and user ID {user_id} not found.");
         }
 
     }
