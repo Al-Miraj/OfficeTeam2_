@@ -3,13 +3,27 @@ public class EventServices {
     // write attendance to attendance.json
     // check availabilty of attendance
     public bool CheckEventExistance(Guid event_Id){
+        Event? event_ = this.GetEvent(event_Id);
+        return event_ is not null; // true if event exists, false if not
+    }
+
+    public bool CheckAttendanceOnTime(Guid event_Id){
+        Event? event_ = this.GetEvent(event_Id);
+        if (event_ is null) return false;
+
+        TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
+        return event_.Start_Time > now && event_.Date >= DateTime.Now; // true if its before the starttime, false if not
+    }
+
+
+    public Event? GetEvent(Guid event_Id){
         List<Event> events = JsonFileHandler.ReadJsonFile<Event>("Data/Events.json");
         foreach (Event e in events){ // Q how to improve this?
             if (e.Id == event_Id){
-                return true;
+                return e;
             }
         }
-        return false;
+        return null;
     }
 
     public List<Guid> ListEventAttendees(Guid event_Id){

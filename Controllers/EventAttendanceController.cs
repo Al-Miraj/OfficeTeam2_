@@ -18,7 +18,7 @@ public class EventControllers: Controller {
 
     [HttpPost("Attend")]
     public async Task<IActionResult> AttendEvent([FromBody] EventAttendance eventAttendance) {
-        if (EventService.CheckEventExistance(eventAttendance.Event_Id)){ // Q is this considered business logic? or is it fine here?
+        if (EventService.CheckAttendanceOnTime(eventAttendance.Event_Id)){ // Q is this considered business logic? or is it fine here?
             JsonFileHandler.WriteToJsonFile("Data/EventAttendance.json", new List<EventAttendance>() {eventAttendance}); // Q should be awaitable?
             return Ok(eventAttendance.Event_Id);
         }
