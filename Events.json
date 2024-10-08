@@ -12,6 +12,20 @@
       "date": "2024-10-15",
       "location": "Conference Room",
       "attendees": ["Alice Johnson", "Bob White"]
+    },
+    {
+      "id": 3,
+      "name": "Product soled",
+      "date": "2024-05-28",
+      "location": "Washington",
+      "attendees": ["johan Kruis", "Albert"]
+    },
+    {
+      "id": 21,
+      "name": "Product Owner",
+      "date": "2020-12-15",
+      "location": "Istanbul",
+      "attendees": ["Hasan Alp Cakir"]
     }
   ]
   
