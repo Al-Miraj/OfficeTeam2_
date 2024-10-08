@@ -1,31 +1,40 @@
 [
-    {
-      "id": 1,
-      "name": "Company Annual Meeting",
-      "date": "2024-10-10",
-      "location": "Main Hall",
-      "attendees": ["John Doe", "Jane Smith"]
-    },
-    {
-      "id": 2,
-      "name": "Product Launch",
-      "date": "2024-10-15",
-      "location": "Conference Room",
-      "attendees": ["Alice Johnson", "Bob White"]
-    },
-    {
-      "id": 3,
-      "name": "Product soled",
-      "date": "2024-05-28",
-      "location": "Washington",
-      "attendees": ["johan Kruis", "Albert"]
-    },
-    {
-      "id": 21,
-      "name": "Product Owner",
-      "date": "2020-12-15",
-      "location": "Istanbul",
-      "attendees": ["Hasan Alp Cakir"]
-    }
-  ]
-  
+  {
+    "Id": 2,
+    "Name": "Product Launch",
+    "Date": "2024-10-15T00:00:00",
+    "Location": "Conference Room",
+    "Attendees": [
+      "Alice Johnson",
+      "Bob White"
+    ]
+  },
+  {
+    "Id": 3,
+    "Name": "Product soled",
+    "Date": "2024-05-28T00:00:00",
+    "Location": "Washington",
+    "Attendees": [
+      "johan Kruis",
+      "Albert"
+    ]
+  },
+  {
+    "Id": 21,
+    "Name": "Product Owner",
+    "Date": "2020-12-15T00:00:00",
+    "Location": "Istanbul",
+    "Attendees": [
+      "Hasan Alp Cakir"
+    ]
+  },
+  {
+    "Id": 22,
+    "Name": "New Event",
+    "Date": "2024-12-01T00:00:00",
+    "Location": "New York",
+    "Attendees": [
+      "New Attendee"
+    ]
+  }
+]

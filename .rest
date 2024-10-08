@@ -1,7 +1,44 @@
 @OfficeTeam2__HostAddress = http://localhost:5201
-GET http://localhost:5201/api/events
+
+### Get all events
+GET http://localhost:5201/events
 Accept: application/json
 
-GET {{OfficeTeam2__HostAddress}}/api/events
+###
+
+### Get event by Id
+GET http://localhost:5201/events/1
 Accept: application/json
-Authorization: Bearer <your_jwt_token_if_needed>
+
+###
+
+### Create a new event
+POST http://localhost:5201/events
+Content-Type: application/json
+
+{
+  "Name": "New Event",
+  "Date": "2024-12-01",
+  "Location": "New York",
+  "Attendees": ["New Attendee"]
+}
+
+###
+
+### Update an event
+PUT http://localhost:5201/events/1
+Content-Type: application/json
+
+{
+  "Id": 1,
+  "Name": "Updated Event",
+  "Date": "2024-12-15",
+  "Location": "Updated Location",
+  "Attendees": ["Updated Attendee"]
+}
+
+###
+
+### Delete an event
+DELETE http://localhost:5201/events/1
+Accept: application/json

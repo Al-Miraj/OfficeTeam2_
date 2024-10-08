@@ -1,34 +1,132 @@
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Text.Json;
 using System.Collections.Generic;
-using OfficeTeam2_.Models; // Make sure the namespace matches your Event model
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using OfficeTeam2_.Models; // Ensure you have the correct namespace
 
 namespace OfficeTeam2_.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class EventsController : ControllerBase
     {
-        private readonly string jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Events.json");
-
+        // GET /events - Get all events
         [HttpGet]
         public IActionResult GetEvents()
         {
-            // Ensure the file exists
-            if (!System.IO.File.Exists(jsonFilePath))
+            var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Events.json");
+
+            if (System.IO.File.Exists(jsonFilePath))
             {
-                return NotFound("Events.json file not found.");
+                var jsonData = System.IO.File.ReadAllText(jsonFilePath);
+                var events = JsonSerializer.Deserialize<List<Event>>(jsonData);
+                return Ok(events);
             }
 
-            // Read the JSON file contents
-            var jsonContent = System.IO.File.ReadAllText(jsonFilePath);
-            Console.WriteLine(jsonContent); // Debugging: output to verify content
+            return NotFound("Events file not found.");
+        }
 
-            // Deserialize the content into a list of Event objects
-            var events = JsonSerializer.Deserialize<List<Event>>(jsonContent);
+        // GET /events/{id} - Get event by Id
+        [HttpGet("{id}")]
+        public IActionResult GetEventById(int id)
+        {
+            var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Events.json");
 
-            return Ok(events);
+            if (System.IO.File.Exists(jsonFilePath))
+            {
+                var jsonData = System.IO.File.ReadAllText(jsonFilePath);
+                var events = JsonSerializer.Deserialize<List<Event>>(jsonData);
+                var eventItem = events.FirstOrDefault(e => e.Id == id);
+
+                if (eventItem != null)
+                {
+                    return Ok(eventItem);
+                }
+
+                return NotFound($"Event with Id {id} not found.");
+            }
+
+            return NotFound("Events file not found.");
+        }
+
+        // POST /events - Add a new event
+        [HttpPost]
+        public IActionResult AddEvent([FromBody] Event newEvent)
+        {
+            var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Events.json");
+
+            if (System.IO.File.Exists(jsonFilePath))
+            {
+                var jsonData = System.IO.File.ReadAllText(jsonFilePath);
+                var events = JsonSerializer.Deserialize<List<Event>>(jsonData);
+
+                newEvent.Id = events.Max(e => e.Id) + 1;  // Increment Id for the new event
+                events.Add(newEvent);
+
+                System.IO.File.WriteAllText(jsonFilePath, JsonSerializer.Serialize(events, new JsonSerializerOptions { WriteIndented = true }));
+
+                return Ok(newEvent);
+            }
+
+            return NotFound("Events file not found.");
+        }
+
+        // PUT /events/{id} - Update an event
+        [HttpPut("{id}")]
+        public IActionResult UpdateEvent(int id, [FromBody] Event updatedEvent)
+        {
+            var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Events.json");
+
+            if (System.IO.File.Exists(jsonFilePath))
+            {
+                var jsonData = System.IO.File.ReadAllText(jsonFilePath);
+                var events = JsonSerializer.Deserialize<List<Event>>(jsonData);
+
+                var eventItem = events.FirstOrDefault(e => e.Id == id);
+                if (eventItem != null)
+                {
+                    eventItem.Name = updatedEvent.Name;
+                    eventItem.Date = updatedEvent.Date;
+                    eventItem.Location = updatedEvent.Location;
+                    eventItem.Attendees = updatedEvent.Attendees;
+
+                    System.IO.File.WriteAllText(jsonFilePath, JsonSerializer.Serialize(events, new JsonSerializerOptions { WriteIndented = true }));
+
+                    return Ok(eventItem);
+                }
+
+                return NotFound($"Event with Id {id} not found.");
+            }
+
+            return NotFound("Events file not found.");
+        }
+
+        // DELETE /events/{id} - Delete an event
+        [HttpDelete("{id}")]
+        public IActionResult DeleteEvent(int id)
+        {
+            var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Events.json");
+
+            if (System.IO.File.Exists(jsonFilePath))
+            {
+                var jsonData = System.IO.File.ReadAllText(jsonFilePath);
+                var events = JsonSerializer.Deserialize<List<Event>>(jsonData);
+
+                var eventItem = events.FirstOrDefault(e => e.Id == id);
+                if (eventItem != null)
+                {
+                    events.Remove(eventItem);
+
+                    System.IO.File.WriteAllText(jsonFilePath, JsonSerializer.Serialize(events, new JsonSerializerOptions { WriteIndented = true }));
+
+                    return Ok($"Event with Id {id} deleted.");
+                }
+
+                return NotFound($"Event with Id {id} not found.");
+            }
+
+            return NotFound("Events file not found.");
         }
     }
 }
