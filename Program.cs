@@ -18,8 +18,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // Enable authentication if needed
-app.UseAuthorization();  // Enable authorization
+// Commenting out the authentication middleware for now
+// app.UseAuthentication(); // Enable authentication if needed
+app.UseAuthorization();  // Enable authorization if needed
 
 // This maps the controllers (including EventsController) to appropriate routes
 app.MapControllers();

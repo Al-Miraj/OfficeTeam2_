@@ -4,9 +4,26 @@
     "Name": "Product Launch",
     "Date": "2024-10-15T00:00:00",
     "Location": "Conference Room",
+    "Review": "It was amazing",
     "Attendees": [
       "Alice Johnson",
       "Bob White"
+    ]
+  },
+  {
+    "Id": 50,
+    "Name": "Product Launch",
+    "Date": "2024-10-15T00:00:00",
+    "Location": "Conference Room",
+    "Attendees": [
+      "Alice Johnson",
+      "Bob White"
+    ],
+    "Reviews": [
+      {
+        "Id": 1,
+        "Comment": "Great event!"
+      }
     ]
   },
   {

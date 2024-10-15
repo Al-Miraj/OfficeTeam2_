@@ -7,7 +7,7 @@ Accept: application/json
 ###
 
 ### Get event by Id
-GET http://localhost:5201/events/1
+GET http://localhost:5201/events/1    
 Accept: application/json
 
 ###
@@ -42,3 +42,12 @@ Content-Type: application/json
 ### Delete an event
  DELETE http://localhost:5201/events/1
 Accept: application/json
+
+### Add a review to an event
+POST http://localhost:5201/events/50/reviews
+Content-Type: application/json
+
+{
+    "Comment": "Great event!"
+}
+

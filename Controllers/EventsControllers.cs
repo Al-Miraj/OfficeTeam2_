@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using OfficeTeam2_.Models; // Keep this line to reference your Event model
+using Microsoft.AspNetCore.Authorization;
+
 
 [ApiController]
 [Route("[controller]")]
@@ -49,6 +51,37 @@ public class EventsController : ControllerBase
         return NotFound("Events file not found.");
     }
 
+    // Add a review to an event
+    [HttpPost("{eventId}/reviews")]
+    public IActionResult AddReviewToEvent(Guid eventId, [FromBody] Review review)
+    {
+        var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Events.json");
+
+        if (System.IO.File.Exists(jsonFilePath))
+        {
+            var jsonData = System.IO.File.ReadAllText(jsonFilePath);
+            var events = JsonSerializer.Deserialize<List<Event>>(jsonData);
+            var eventToUpdate = events.FirstOrDefault(e => e.Id == eventId);
+
+            if (eventToUpdate == null)
+            {
+                return NotFound($"Event with Id {eventId} not found.");
+            }
+
+            // Set the review Id based on the current count of reviews
+            review.Id = eventToUpdate.Reviews.Count + 1; // Simple increment for new review Ids
+            eventToUpdate.Reviews.Add(review);
+
+            // Save changes back to the JSON file
+            var updatedJsonData = JsonSerializer.Serialize(events);
+            System.IO.File.WriteAllText(jsonFilePath, updatedJsonData);
+
+            return Ok(eventToUpdate);
+        }
+
+        return NotFound("Events file not found.");
+    }
+
     // POST /events - Add a new event
     [HttpPost]
     public IActionResult AddEvent([FromBody] Event newEvent)
@@ -70,6 +103,9 @@ public class EventsController : ControllerBase
 
         return NotFound("Events file not found.");
     }
+
+
+
 
     // PUT /events/{id} - Update an event
     [HttpPut("{id}")]
