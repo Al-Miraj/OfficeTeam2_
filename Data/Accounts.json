@@ -1,14 +1,17 @@
 [
-    {
-      "Username": "michealbubley",
-      "Password": "lolcow"
-    },
-    {
-      "Username": "kating",
-      "Password": "bomba"
-    },
-    {
-      "Username": "betalux",
-      "Password": "benalux"
-    }
+  {
+    "Username": "michealbubley",
+    "Password": "lolcow",
+    "Role": "User"
+  },
+  {
+    "Username": "kating",
+    "Password": "bomba",
+    "Role": "User"
+  },
+  {
+    "Username": "betalux",
+    "Password": "benalux",
+    "Role": "Admin"
+  }
 ]

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 /*1.1. The student needs to implement a login system for an admin user. This will lay the basic fundament for authorization to our application. 
 •	The login system will consist of a POST call that receives a username and password and checks if the password is correct with what is in the database. 
@@ -9,67 +11,64 @@ This endpoint will also register a session on the server.
 
 
 
-[Route("")]
-public class LogInController : Controller
-{
 
+
+[ApiController]
+[Route("api/[controller]")]
+public class AuthController : ControllerBase
+{
     private readonly ILoginService _loginService;
 
-    public LogInController(ILoginService loginService)
+    public AuthController(ILoginService loginService)
     {
         _loginService = loginService;
     }
 
-    [HttpPost("LogIn")]
-    public async Task<IActionResult> LogInAttempt([FromBody] Account account)
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] Account account)
     {
-        if (_loginService.CheckSession()) // Q does this work when multiple are logged in?
+    
+        if (_loginService.Login(account))
         {
-            return Ok($"you are already logged in user {_loginService.GetLoggedInUser().Username}");
+            // Registreer de sessie op de server
+            HttpContext.Session.SetString("Username", account.Username!);
+            return Ok("Login successful.");
         }
-        var result = await _loginService.LogInAsync(account);
-        if (result)
-        {
-            return Ok("Account found");
-        }
-
-        return BadRequest("Invalid username and/or password");
-
-
+        return Unauthorized("Invalid username or password.");
+    }
+    [HttpPost("Register")]
+    public IActionResult Register([FromBody] Account account)
+    {
+        if(account == null) NotFound();
+        bool check = _loginService.Register(account);
+        return Ok(account.Username +" has been registered");
 
     }
 
+
     [HttpGet("CheckSession")]
-    public async Task<bool> CheckSession()
+    public IActionResult CheckSession()
     {
-        // if (_loginService.CheckSession())
-        // {
-        //     return _loginService.CheckSession();
-        // }
-        return _loginService.CheckSession();
+        var username = HttpContext.Session.GetString("Username");
+        if (username != null)
+        {
+            return Ok(new { IsLoggedIn = true, CurrentUser = username });
+        }
+        return Ok(new { IsLoggedIn = false });
     }
 
     [HttpGet("CheckUser")]
     public IActionResult CheckUser()
     {
-        var user = _loginService.GetLoggedInUser();
-        if (user != null)
-        {
-            return Ok(user);
-        }
-
-        return BadRequest("No user found");
+        var username = HttpContext.Session.GetString("Username");
+        return Ok(new { Username = username });
     }
 
     [HttpGet("LogOut")]
     public IActionResult LogOut()
     {
-        _loginService.LogOut();
-        return Ok("Logged out successfully");
+        HttpContext.Session.Remove("Username"); // Clear session
+        return Ok(new { Message = "Logged out successfully" });
     }
-
-
 }
-
-
 

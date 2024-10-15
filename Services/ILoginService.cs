@@ -1,7 +1,8 @@
 public interface ILoginService
 {
-    Task<bool> LogInAsync(Account account);
-    bool CheckSession();
-    Account GetLoggedInUser();
-    void LogOut();
+    bool Login(Account account);
+    bool CheckSession(string username);
+    // Account GetLoggedInUser(string username);
+    void LogOut(string username);
+    bool Register(Account account);
 }

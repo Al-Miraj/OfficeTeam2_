@@ -1,55 +1,78 @@
+using Newtonsoft.Json;
+
+
 public class LoginService : ILoginService
 {
-    private Account? _loggedInUser = null;
-    private bool _isLoggedIn = false;
+    private Dictionary<string, Account> _loggedInUsers = new Dictionary<string, Account>();
+
+    // private Account? _loggedInUser = null;
+    // private bool _isLoggedIn = false;
     private string _fileName = "Data/Accounts.json";
 
-    public async Task<bool> LogInAsync(Account account)
+    public bool Login(Account account)
     {
         if (!DomainInputValidation.IsValidUsername(account.Username) || !DomainInputValidation.IsValidPassword(account.Password))
         {
             return false;
         }
 
-
-        if (SearchAccount(account.Username, account.Password))
+        List<Account> accounts = JsonFileHandler.ReadJsonFile<Account>(_fileName);
+        Account? account1 = accounts.Find(a => a.Username == account.Username && a.Password == account.Password && a.Role == account.Role);
+        if (account1 != null)
         {
-            _loggedInUser = account;
-            _isLoggedIn = true;
+            _loggedInUsers[account.Username] = account1;
             return true;
         }
-
         return false;
     }
 
-    public bool SearchAccount(string username, string password)
-    {
-        List<Account> accounts = JsonFileHandler.ReadJsonFile<Account>(_fileName);
+    // public bool SearchAccount(string username, string password)
+    // {
+    //     List<Account> accounts = JsonFileHandler.ReadJsonFile<Account>(_fileName);
         
-        foreach (Account item in accounts)
+    //     foreach (Account item in accounts)
+    //     {
+    //         if (item.Username == username && item.Password == password)
+    //         {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+
+    public bool Register(Account account){
+        if (!DomainInputValidation.IsValidUsername(account.Username) || !DomainInputValidation.IsValidPassword(account.Password))
         {
-            if (item.Username == username && item.Password == password)
-            {
-                return true;
-            }
+            return false;
         }
-        return false;
+        else if (account == null) return false;
+
+        account.Role = "User";
+
+        List<Account> accounts = JsonFileHandler.ReadJsonFile<Account>(_fileName);
+
+        accounts.Add(account);
+
+        var updatedJson = JsonConvert.SerializeObject(accounts, Formatting.Indented);
+        File.WriteAllText(_fileName, updatedJson);
+
+        return true;
+
     }
 
 
-    public bool CheckSession()
+    public bool CheckSession(string username)
     {
-        return _isLoggedIn;
+        return _loggedInUsers.ContainsKey(username);
     }
 
-    public Account GetLoggedInUser()
+    
+
+    public void LogOut(string username)
     {
-        return _loggedInUser;
+        _loggedInUsers.Remove(username);
+
     }
 
-    public void LogOut()
-    {
-        _loggedInUser = null!;
-        _isLoggedIn = false;
-    }
+    
 }

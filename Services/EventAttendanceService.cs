@@ -9,6 +9,7 @@ public class EventServices {
                 return true;
             }
         }
+        // events.Find(_ => _.Id == event_Id); dit ofzo
         return false;
     }
 
