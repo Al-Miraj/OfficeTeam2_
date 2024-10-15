@@ -1,0 +1,28 @@
+POST https://localhost:5000/Mood/submit
+Content-Type: application/json
+
+{
+    "UserId": "d9a2785f-9427-431a-879f-bc22b205405d",
+    "Mood": "Good"
+}
+####
+POST https://localhost:5000/Mood/submit
+Content-Type: application/json
+
+{
+    "UserId": "d9a2785f-9427-431a-879f-bc22b205405d",
+    "Mood": "Bad"
+}
+###
+GET https://localhost:5000/Mood/all
+###
+GET https://localhost:5000/Mood/user/d9a2785f-9427-431a-879f-bc22b205405d
+###
+POST https://localhost:5000/Mood/submit
+Content-Type: application/json
+
+{
+    "UserId": "d9a2785f-9427-431a-879f-bc22b205405d",
+    "Mood": "ReallyBad"
+}
+###

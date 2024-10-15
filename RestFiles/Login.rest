@@ -29,3 +29,24 @@ GET https://localhost:5000/CheckUser
 GET https://localhost:5000/LogOut
 ####
 
+
+POST https://localhost:5000/LogIn
+Content-Type: application/json
+
+{
+    "Username": "michealbubley",
+    "Password": "lolcow"
+}
+### login als admin
+
+GET https://localhost:5000/CheckSession
+###
+
+GET https://localhost:5000/CheckUser
+###
+
+GET https://localhost:5000/LogOut
+### 
+
+GET https://localhost:5000/CheckSession
+### 

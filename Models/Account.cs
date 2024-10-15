@@ -1,9 +1,13 @@
-public class Account {
-    public string Username {get; set; }
-    public string Password {get; set; } // Q how to security this TT
-    public Account() {}
-    public Account(string username, string password){
+public class Account
+{
+    public string Username { get; set; }
+    public string Password { get; set; } // Q how to security this TT
+    public bool IsAdmin { get; set; }
+    public Account() { }
+    public Account(string username, string password, bool isAdmin)
+    {
         Username = username;
         Password = password;
+        IsAdmin = isAdmin;
     }
 }

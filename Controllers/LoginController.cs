@@ -7,12 +7,9 @@ This endpoint will also register a session on the server.
 •	The login logic and endpoints need to be separated in a Service and a Controller.
 */
 
-
-
 [Route("")]
 public class LogInController : Controller
 {
-
     private readonly ILoginService _loginService;
 
     public LogInController(ILoginService loginService)
@@ -23,29 +20,31 @@ public class LogInController : Controller
     [HttpPost("LogIn")]
     public async Task<IActionResult> LogInAttempt([FromBody] Account account)
     {
-        if (_loginService.CheckSession()) // Q does this work when multiple are logged in?
+        if (_loginService.CheckSession())
         {
-            return Ok($"you are already logged in user {_loginService.GetLoggedInUser().Username}");
+            return Ok($"You are already logged in as {_loginService.GetLoggedInUser().Username}");
         }
+
         var result = await _loginService.LogInAsync(account);
         if (result)
         {
-            return Ok("Account found");
+            var user = _loginService.GetLoggedInUser();
+            if (user.IsAdmin)
+            {
+                return Ok("Admin logged in");
+            }
+            else
+            {
+                return Ok("User logged in");
+            }
         }
 
         return BadRequest("Invalid username and/or password");
-
-
-
     }
 
     [HttpGet("CheckSession")]
-    public async Task<bool> CheckSession()
+    public bool CheckSession()
     {
-        // if (_loginService.CheckSession())
-        // {
-        //     return _loginService.CheckSession();
-        // }
         return _loginService.CheckSession();
     }
 
@@ -67,9 +66,5 @@ public class LogInController : Controller
         _loginService.LogOut();
         return Ok("Logged out successfully");
     }
-
-
 }
-
-
 
