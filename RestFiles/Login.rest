@@ -1,0 +1,42 @@
+### Test API
+GET https://localhost:5000/api/Auth/LogIn
+####
+
+POST https://localhost:5000/api/Auth/LogIn HTTP/1.1
+Content-Type: application/json
+
+{
+    "Username": "micheal222",
+    "Password": "popbina-010",
+    "Role" : "User"
+}
+####
+
+POST https://localhost:5000/api/Auth/LogIn HTTP/1.1
+Content-Type: application/json
+
+{
+    "Username": "michealbubley",
+    "Password": "lolcow",
+    "Role" : "User"
+}
+####
+
+GET https://localhost:5000/api/Auth/CheckSession
+####
+
+GET https://localhost:5000/api/Auth/CheckUser
+####
+
+GET https://localhost:5000/api/Auth/LogOut
+####
+
+POST https://localhost:5000/api/Auth/Register HTTP/1.1
+Content-Type: application/json
+
+{
+    "Username": "User_002",
+    "Password": "lolcow"
+}
+####
+
