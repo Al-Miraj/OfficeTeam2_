@@ -1,6 +1,0 @@
-@OfficeTeam2__HostAddress = http://localhost:5201
-
-GET {{OfficeTeam2__HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
