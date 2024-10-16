@@ -1,0 +1,63 @@
+# @OfficeTeam2__HostAddress = http://localhost:5201
+
+### Get all events
+GET https://localhost:5000/events
+Accept: application/json
+
+###
+
+### Get event by Id
+GET https://localhost:5000/events/ac1c489d-c090-49dc-b850-b827f1d1b049
+Accept: application/json
+
+###
+
+### Create a new event
+POST https://localhost:5000/events
+Content-Type: application/json
+
+{
+    "Title": "Meeting",
+    "Name": "null",
+    "Description": "Very iiiiiiimportant",
+    "Date": "2024-09-23T21:21:30.3619148+02:00",
+    "Start_Time": "17:00:00",
+    "End_Time": "19:00:00",
+    "Location": "Office",
+    "Admin_Approval": true,
+    "Reviews": []
+}
+
+###
+
+### Update an event
+PUT https://localhost:5000/events/ac1c489d-c090-49dc-b850-b827f1d1b049
+Content-Type: application/json
+
+  {
+    "Id": "ac1c489d-c090-49dc-b850-b827f1d1b049",
+    "Title": "MeetingBing",
+    "Name": "null",
+    "Description": "Very important",
+    "Date": "2024-09-23T21:21:30.3619148+02:00",
+    "Start_Time": "17:00:00",
+    "End_Time": "19:00:00",
+    "Location": "Office",
+    "Admin_Approval": true,
+    "Reviews": []
+  }
+
+###
+
+### Delete an event
+DELETE https://localhost:5000/events/dc20869e-0e40-4ba0-a4d5-ca68aa6e4578
+Accept: application/json
+
+### Add a review to an event
+POST https://localhost:5000/events/dc20869e-0e40-4ba0-a4d5-ca68aa6e4578/reviews
+Content-Type: application/json
+
+{
+    "Comment": "Great event!"
+}
+
