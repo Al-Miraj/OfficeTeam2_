@@ -1,0 +1,53 @@
+### Test API
+GET https://localhost:5000/api/Auth/LogIn
+####
+
+POST https://localhost:5000/api/Auth/LogIn HTTP/1.1
+Content-Type: application/json
+
+{
+    "Username": "micheal222",
+    "Password": "popbina-010",
+    "Role" : "User"
+}
+####
+
+POST https://localhost:5000/api/Auth/LogIn HTTP/1.1
+Content-Type: application/json
+
+{
+    "Email": "kating@example.com",
+    "Password": "bomba"
+}
+####
+
+GET https://localhost:5000/api/Auth/CheckSession
+####
+
+GET https://localhost:5000/api/Auth/CheckUser
+####
+
+GET https://localhost:5000/api/Auth/LogOut
+####
+
+# POST https://localhost:5000/api/Auth/Register HTTP/1.1
+# Content-Type: application/json
+
+# {
+#     "Username": "User_002",
+#     "Password": "lolcow"
+# }
+####
+
+POST https://localhost:5000/api/Auth/Register
+Content-Type: application/json
+
+{
+    "First_Name": "hasan",
+    "Last_Name": "Piker",
+    "Email": "betalux@example.com",
+    "Password": "benalux",
+    "Recurring_Days": 0
+}
+
+
