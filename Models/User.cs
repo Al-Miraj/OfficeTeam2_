@@ -2,12 +2,16 @@
 // User.cs
 ////////////////////////////////////////////////
 public class User {
-    Guid Id {get; set; } // should be Guid
-    string First_Name {get; set; }
-    string Last_Name {get; set; }
-    string Email {get; set; }
-    string Password {get; set; }
-    int Recurring_Days {get; set; }
+
+    public Guid Id { get; set; } = Guid.NewGuid(); 
+    public string? First_Name { get; set; } = ""; 
+    public string? Last_Name { get; set; } = ""; 
+    public string? Email { get; set; } = ""; 
+    public string? Password { get; set; }
+    public int Recurring_Days { get; set; }  = 0;
+
+    public string Role {get;set;} = "User";
+
 
     public User () {}
     public User (Guid id, string first_name, string last_name, string email, string password, int recurring_days) { // Q how to handle password securely?

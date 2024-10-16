@@ -1,0 +1,52 @@
+@OfficeTeam2__HostAddress = http://localhost:5201
+
+### Get all events
+GET https://localhost:5000/events
+Accept: application/json
+
+###
+
+### Get event by Id
+GET https://localhost:5000/events/1    
+Accept: application/json
+
+###
+
+### Create a new event
+POST https://localhost:5000/events
+Content-Type: application/json
+
+{
+  "Name": "New Event",
+  "Date": "2024-12-01",
+  "Location": "New York",
+  "Attendees": ["New Attendee"]
+}
+
+###
+
+### Update an event
+PUT https://localhost:5000/events/1
+Content-Type: application/json
+
+{
+  "Id": 1,
+  "Name": "Updated Event",
+  "Date": "2024-12-15",
+  "Location": "Updated Location",
+  "Attendees": ["Updated Attendee"]
+}
+
+###
+
+### Delete an event
+DELETE https://localhost:5000/events/1
+Accept: application/json
+
+### Add a review to an event
+POST https://localhost:5000/events/50/reviews
+Content-Type: application/json
+
+{
+    "Comment": "Great event!"
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "Id": "b2c92fdd-d3a3-42f1-8a13-634c88c5749b",
+    "First_Name": "Micheal",
+    "Last_Name": "Bubley",
+    "Email": "michealbubley@example.com",
+    "Password": "lolcow",
+    "Recurring_Days": 5,
+    "Role": "User"
+  },
+  {
+    "Id": "e4e8ffb8-ff97-45d8-83fe-b19d4d248fc2",
+    "First_Name": "Kating",
+    "Last_Name": "Doe",
+    "Email": "kating@example.com",
+    "Password": "bomba",
+    "Recurring_Days": 3,
+    "Role": "User"
+  },
+  {
+    "Id": "7d0cc35b-9117-4eec-93b9-769d76946955",
+    "First_Name": "Beta",
+    "Last_Name": "Lux",
+    "Email": "betalux@example.com",
+    "Password": "benalux",
+    "Recurring_Days": 7,
+    "Role": "User"
+  },
+  {
+    "Id": "9a769893-bd42-4a51-8b38-6fe28aad5f0f",
+    "First_Name": "hasan",
+    "Last_Name": "Piker",
+    "Email": "betalux@example.com",
+    "Password": "benalux",
+    "Recurring_Days": 0,
+    "Role": "User"
+  }
+]

@@ -1,8 +1,11 @@
 public interface ILoginService
 {
-    bool Login(Account account);
+    bool Login(User user);
     bool CheckSession(string username);
     // Account GetLoggedInUser(string username);
     void LogOut(string username);
-    bool Register(Account account);
+    bool Register(User user);
+    string GetUserRole(string username);
+
+    User FindByID(Guid id);
 }

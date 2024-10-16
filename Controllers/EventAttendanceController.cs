@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -7,9 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 [Route("api/EventAttendance")]
 public class EventControllers: Controller {
     public EventServices EventService;
+
     public EventControllers(EventServices eventService){
         EventService = eventService;
     }
+    
 
     [HttpGet("h")]
     public async Task<IActionResult> Testt(){
@@ -30,6 +33,7 @@ public class EventControllers: Controller {
     // basic authentication
     [HttpGet("FindEventAttendees/{event_id}")]
     public async Task<IActionResult> FindEventAttendees(Guid event_id){
+      
         if (EventService.CheckEventExistance(event_id)){
             return Ok(EventService.ListEventAttendees(event_id));
         }
@@ -41,6 +45,8 @@ public class EventControllers: Controller {
 
     [HttpGet("DeleteEventAttendance/{event_id}/{user_id}")]
     public async Task<IActionResult> DeleteEventAttendance(Guid event_id, Guid user_id){
+
+
         if (EventService.CheckEventExistance(event_id) && EventService.DeleteEventAttendance(event_id, user_id)){
             return Ok("deletion succesfull");
         }

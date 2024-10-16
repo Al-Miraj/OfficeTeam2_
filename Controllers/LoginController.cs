@@ -25,25 +25,33 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult Login([FromBody] Account account)
+    public IActionResult Login([FromBody] User user)
     {
     
-        if (_loginService.Login(account))
+        if (_loginService.Login(user))
         {
-            // Registreer de sessie op de server
-            HttpContext.Session.SetString("Username", account.Username!);
+            HttpContext.Session.SetString("Username", user.Email);
             return Ok("Login successful.");
         }
         return Unauthorized("Invalid username or password.");
     }
     [HttpPost("Register")]
-    public IActionResult Register([FromBody] Account account)
+    public IActionResult Register([FromBody] User user)
     {
-        if(account == null) NotFound();
-        bool check = _loginService.Register(account);
-        return Ok(account.Username +" has been registered");
+        if (user == null || string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password))
+        {
+            return BadRequest("Email and Password are required.");
+        }
 
+        bool check = _loginService.Register(user);
+        if (check)
+        {
+            return Ok(user.First_Name +" " +user.Last_Name + " has been registered");
+        }
+        
+        return BadRequest("Registration failed");
     }
+
 
 
     [HttpGet("CheckSession")]

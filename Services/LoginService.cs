@@ -3,28 +3,36 @@ using Newtonsoft.Json;
 
 public class LoginService : ILoginService
 {
-    private Dictionary<string, Account> _loggedInUsers = new Dictionary<string, Account>();
+    private Dictionary<string, User> _loggedInUsers = new Dictionary<string, User>();
 
     // private Account? _loggedInUser = null;
     // private bool _isLoggedIn = false;
     private string _fileName = "Data/Accounts.json";
 
-    public bool Login(Account account)
+    public bool Login(User user)
     {
-        if (!DomainInputValidation.IsValidUsername(account.Username) || !DomainInputValidation.IsValidPassword(account.Password))
+        List<User> users = JsonFileHandler.ReadJsonFile<User>("Data/Users.json");
+
+        if (user == null)
         {
+            Console.WriteLine("Users is null.");
             return false;
         }
 
-        List<Account> accounts = JsonFileHandler.ReadJsonFile<Account>(_fileName);
-        Account? account1 = accounts.Find(a => a.Username == account.Username && a.Password == account.Password && a.Role == account.Role);
-        if (account1 != null)
+        User? user1 = users.Find(a => a.Email == user.Email && a.Password == user.Password && a.Role == user.Role);
+        if (user1 == null)
         {
-            _loggedInUsers[account.Username] = account1;
-            return true;
+            Console.WriteLine("No matching account found.");
+            return false;
         }
-        return false;
+
+
+        _loggedInUsers[user1.First_Name] = user1;
+
+        return true; 
     }
+
+
 
     // public bool SearchAccount(string username, string password)
     // {
@@ -39,26 +47,46 @@ public class LoginService : ILoginService
     //     }
     //     return false;
     // }
-
-    public bool Register(Account account){
-        if (!DomainInputValidation.IsValidUsername(account.Username) || !DomainInputValidation.IsValidPassword(account.Password))
+     public string GetUserRole(string username)
+    {
+        if (_loggedInUsers.TryGetValue(username, out User user))
         {
-            return false;
+            return user.Role; // Return the user's role
         }
-        else if (account == null) return false;
+        return null; // User is not logged in
+    }
 
-        account.Role = "User";
+    public bool Register(User user)
+    {
+        if (user == null)
+        {
+            throw new ArgumentNullException(nameof(user), "User cannot be null.");
+        }
 
-        List<Account> accounts = JsonFileHandler.ReadJsonFile<Account>(_fileName);
+        if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password))
+        {
+            throw new ArgumentException("Email and Password cannot be null or empty.");
+        }
 
-        accounts.Add(account);
+        if (!DomainInputValidation.IsValidUsername(user.Email) || !DomainInputValidation.IsValidPassword(user.Password))
+        {
+            return false; 
+        }
 
-        var updatedJson = JsonConvert.SerializeObject(accounts, Formatting.Indented);
-        File.WriteAllText(_fileName, updatedJson);
+        user.Role = "User";
+        user.Id = Guid.NewGuid(); 
+
+        List<User> users = JsonFileHandler.ReadJsonFile<User>("Data/Users.json");
+
+        users.Add(user);
+
+        var updatedJson = JsonConvert.SerializeObject(users, Formatting.Indented);
+        File.WriteAllText("Data/Users.json", updatedJson);
 
         return true;
-
     }
+
+
 
 
     public bool CheckSession(string username)
@@ -73,6 +101,13 @@ public class LoginService : ILoginService
         _loggedInUsers.Remove(username);
 
     }
+    public User FindByID(Guid id){
+        List<User> users = JsonFileHandler.ReadJsonFile<User>("Data/Users.json");
 
+        User? user = users.Find(_ => _.Id == id);
+        return user!;
+
+
+    }
     
 }
