@@ -1,10 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text.Json;
-using OfficeTeam2_.Models; // Keep this line to reference your Event model
-using Microsoft.AspNetCore.Authorization;
 
 
 [ApiController]
