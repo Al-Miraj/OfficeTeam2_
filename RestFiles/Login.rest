@@ -1,13 +1,13 @@
 ### Test API
-GET https://localhost:5000/api/Auth/LogIn
+POST https://localhost:5000/api/Auth/LogIn
 ####
 
 POST https://localhost:5000/api/Auth/LogIn HTTP/1.1
 Content-Type: application/json
 
 {
-    "Username": "micheal222",
-    "Password": "popbina-010",
+    "Email": "michealbubley@example.com",
+    "Password": "lolcow",
     "Role" : "User"
 }
 ####
@@ -18,7 +18,7 @@ Content-Type: application/json
 {
     "Email": "kating@example.com",
     "Password": "bomba"
-}
+    }
 ####
 
 GET https://localhost:5000/api/Auth/CheckSession

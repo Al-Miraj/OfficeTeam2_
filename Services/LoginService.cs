@@ -9,27 +9,27 @@ public class LoginService : ILoginService
     // private bool _isLoggedIn = false;
     // private string _fileName = "Data/Accounts.json";
 
-    public bool Login(User user)
+    public (bool,User) Login(User user)
     {
         List<User> users = JsonFileHandler.ReadJsonFile<User>("Data/Users.json");
 
         if (user == null)
         {
             Console.WriteLine("Users is null.");
-            return false;
+            return (false, null!);
         }
 
-        User? user1 = users.Find(a => a.Email == user.Email && a.Password == user.Password && a.Role == user.Role);
+        User? user1 = users.Find(a => a.Email == user.Email && a.Password == user.Password);
         if (user1 == null)
         {
             Console.WriteLine("No matching account found.");
-            return false;
+            return (false, null!);
         }
 
 
         _loggedInUsers[user1.First_Name] = user1;
 
-        return true; 
+        return (true, user1!);
     }
 
 
@@ -60,12 +60,12 @@ public class LoginService : ILoginService
     {
         if (user == null)
         {
-            throw new ArgumentNullException(nameof(user), "User cannot be null.");
+            return false; 
         }
 
         if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password))
         {
-            throw new ArgumentException("Email and Password cannot be null or empty.");
+            return false; 
         }
 
         if (!DomainInputValidation.IsValidUsername(user.Email) || !DomainInputValidation.IsValidPassword(user.Password))
