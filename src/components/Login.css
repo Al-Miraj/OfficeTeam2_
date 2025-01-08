@@ -1,0 +1,436 @@
+#login_page {
+    display: flex;
+    flex-direction: row;
+    background: linear-gradient(#ffe23f, #fd6934);
+    font-family: Etelka, Arial, sans-serif;
+}
+
+#loginImgContainer{
+    display: flex;
+    height: 100vh;
+    width: 30vw;
+    overflow: hidden;
+}
+
+#loginImgContainer img
+{
+    height: 100vh;
+    width: auto;
+    margin-left: -90%;
+}
+
+#loginContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 70vw;
+    background-color: rgb(255, 255, 255);
+}
+
+#loginLogform {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 600;
+    background: #fff;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 10px;
+    align-items: center;
+}
+
+/* #loginLogform{
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    width: 70%;
+    background-color: #920000;
+} */
+
+/* #loginLogoContainer{
+    display: flex;
+    align-items: center;
+    height: 25%;
+    background-color: aqua;
+    overflow: hidden;
+} */
+
+#loginLogoContainer img {
+    width: 400px;
+    margin-top: -95px;
+    height: auto; 
+}
+/* #loginLogoContainer img{
+    background-color: #ffe23f;
+    height: 200%;
+} */
+
+#loginInputHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: -100px;
+}
+
+#loginInputHeader >div:first-child {
+    color: #ff0000;
+    font-size: 35px;
+    font-weight: 700;
+}
+
+/*
+#loginInputHeader >div:last-child {
+    width: 150px;
+    height: 6px;
+    background: #ff0000;
+    border-radius: 9px;
+}*/
+
+
+
+/* #loginInputContainer{
+    height: 50%;
+    width: 100%;
+    background-color: antiquewhite;
+} */
+
+/* #loginInputHeader{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 25%;
+    background-color: purple;
+} */
+
+/* #loginInputHeader >div:first-child{
+    color: #ff0000;
+    font-size: 50px;
+    font-weight: 700;
+} */
+
+
+
+
+#loginInputInputs {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+/* #loginInputInputs{
+    display: flex;
+    flex-direction: column;
+    height: 75%;
+    background-color: palegreen;
+    justify-content: space-evenly;
+} */
+
+
+#loginInputInputs >div {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    padding: 10px;
+}
+
+#loginInputInputs >div img{
+    margin: 0px 30px;
+}
+
+#loginInputInputs >div  input {
+    height: 40px;
+    width: 400px;
+    background: rgba(0, 0, 0, 0);
+    border-radius: 6px;
+    border-color: lightgray;
+    border-width: 2px;
+    border-style:solid;
+    outline: none;
+    font-size: 16px;
+    padding: 5px;
+}
+/* #loginInputInputs >div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+    height: 22%;
+    background: #e3e3d2ff;
+    border-radius: 6px;
+} */
+
+#loginFoot
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#loginForgotPassword{
+    display: flex;
+    margin-top: 10px;
+    color: #797979;
+    font-size:14px;
+}
+
+#loginForgotPassword span{
+    color: #920000;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#loginSubmitContainer{
+    display: flex;
+    gap: 30px;
+    margin: 40px auto;
+}
+
+#loginSubmit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #fff;
+    background: #ff0000;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+
+
+
+#container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 600;
+    background: #fff;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 10px;
+    align-items: center;
+}
+
+#EnecoLogo img {
+    width: 400px;
+    margin-top: -95px;
+    height: auto; 
+}
+
+#header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: -160px;
+}
+
+#text {
+    color: #ff0000;
+    font-size: 48px;
+    font-weight: 700;
+}
+
+#underline {
+    width: 100px;
+    height: 6px;
+    background: #ff0000;
+    border-radius: 9px;
+}
+
+.inputs {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 60px;
+    background: #e3e3d2ff;
+    border-radius: 6px;
+}
+
+.input img {
+    margin: 0px 30px;
+}
+
+.input input {
+    height: 50px;
+    width: 400px;
+    background: #e3e3d2ff;
+    border: none;
+    outline: none;
+    color: #808080;
+    font-size: 16px;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#forgot-password{
+    margin-top: 10px;
+    color: #797979;
+    font-size:14px
+}
+
+#forgot-password span{
+    color: #920000;
+    cursor: pointer;
+}
+
+
+#submit-container{
+    display: flex;
+    gap: 30px;
+    margin: 40px auto;
+}
+
+#submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #fff;
+    background: #ff0000;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+#colleaguesText {
+    color: #ff0000;
+    font-size: 48px;
+    font-weight: 700;
+}
+
+
+
+
+
+#zzzzz{
+    background-color: #fd6934;
+    height: 50vh;
+}
+
+#xxxxx{
+    background-color: #808080;
+} */
+
+
+#loginPopupContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+
+#loginPopUpBox {
+    display: flex;
+    flex-direction: column;
+    height: 40%;
+    width: 40%;
+    margin-left: 30%;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+#loginPopUpBox h3{
+    color: gray;
+}
+
+#btnBox{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5px;
+    height: 20%;
+}
+
+#resetBtn{
+    border: none;
+    background-color: #ED1C25;
+    color: white;
+    width: 25%;
+    padding: 7px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 12px;
+    box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.17);
+}
+
+#closeBtn{
+    color: #ED1C25;
+    border: none;
+    width: 25%;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.17);
+}
+
+#loginInputInputs p{
+    height: 50px;
+    margin: 0;
+}
