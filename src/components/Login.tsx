@@ -31,7 +31,7 @@ const Login = () => {
             console.log("Login successful");
             localStorage.setItem("isAuthenticated", "true"); // Zet authenticatiestatus
             localStorage.setItem("userId", user.Id); // Sla de gebruikers-ID op
-            navigate("/calendar"); // Navigeer naar de kalenderpagina
+            navigate("/calendar", { state: { user } }); // Navigeer naar de kalenderpagina
         } else {
             console.log("Invalid credentials");
             alert("Invalid credentials!");

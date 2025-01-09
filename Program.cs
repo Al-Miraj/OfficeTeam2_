@@ -4,6 +4,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:8080") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddDistributedMemoryCache(); 
 builder.Services.AddSession(options =>
 {
@@ -15,6 +26,8 @@ builder.Services.AddControllers();
 builder.Services.AddTransient<IEventAttendanceService, EventAttendanceService>();
 builder.Services.AddTransient<ILoginService, LoginService>(); 
 var app = builder.Build();
+
+app.UseCors("AllowFrontend");
 
 app.Urls.Add("https://localhost:5000/");
 

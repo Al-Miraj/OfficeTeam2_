@@ -10,19 +10,6 @@ const App: React.FC = () => {
   console.log("isAuthenticated:", isAuthenticated); // Dit toont de status van inloggen in de console
 
 
-  /*return (
-    <Routes>
-      <Route 
-        index
-        element={!isAuthenticated ? <Login /> : <Navigate to="/calendar" />} 
-      />
-      
-      <Route 
-        path="/calendar" 
-        element={isAuthenticated ? <Calendar /> : <Navigate to="/" />} 
-      />
-    </Routes>
-  );*/
   return (
     <Routes>
         <Route index element={<Login />}></Route>
