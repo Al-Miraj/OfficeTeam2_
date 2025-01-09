@@ -2,16 +2,16 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.tsx",// Pad naar je entry point
+  entry: "./src/index.tsx",
   output: {
-    path: path.resolve(__dirname, "dist"), // Output map
-    filename: "bundle.js", // Output bestand
+    path: path.resolve(__dirname, "dist"), 
+    filename: "bundle.js", 
   },
   module: {
     rules: [
       {
         test: /\.(png|jpe?g|gif)$/i,
-        type: "asset/resource", // Zorg ervoor dat Webpack afbeeldingen bundelt
+        type: "asset/resource", 
       },
       {
         test: /\.tsx?$/,
@@ -26,15 +26,15 @@ module.exports = {
   },  
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html", // Pad naar je HTML-template
+      template: "./src/index.html", 
     }),
   ],
   devServer: {
-    static: "./dist", // Statische bestanden vanuit de "dist" map
-    port: 8080, // Specificeer de poort
-    open: true, // Open browser automatisch
+    static: "./dist", 
+    port: 8080,
+    open: true, 
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"], // Automatische extensie-resolutie
+    extensions: [".tsx", ".ts", ".js"], 
   },
 };

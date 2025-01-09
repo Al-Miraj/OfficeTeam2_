@@ -27,3 +27,23 @@
     color: white;
   }
   
+  .calendar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .event-form {
+    margin-top: 20px;
+  }
+  
+  .event-list {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .event-list p {
+    margin: 5px 0;
+  }
+  

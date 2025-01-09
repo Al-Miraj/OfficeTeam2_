@@ -1,6 +1,6 @@
 // src/models/User.ts
 export interface User {
-    Id: string; // C# Guid wordt een string in TypeScript
+    Id: string; 
     First_Name: string;
     Last_Name: string;
     Email: string;

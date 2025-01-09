@@ -21,7 +21,7 @@ const Login = () => {
         console.log("Form submitted");
         console.log("Email:", email, "Password:", password);
     
-        // Controleer de ingevoerde gegevens met de gebruikers in users.json
+        
         
         const user = users.find((user: User) => user.Email === email && user.Password === password);
 
@@ -29,9 +29,9 @@ const Login = () => {
     
         if (user) {
             console.log("Login successful");
-            localStorage.setItem("isAuthenticated", "true"); // Zet authenticatiestatus
-            localStorage.setItem("userId", user.Id); // Sla de gebruikers-ID op
-            navigate("/calendar"); // Navigeer naar de kalenderpagina
+            localStorage.setItem("isAuthenticated", "true"); 
+            localStorage.setItem("userId", user.Id);
+            navigate("/calendar");
         } else {
             console.log("Invalid credentials");
             alert("Invalid credentials!");
